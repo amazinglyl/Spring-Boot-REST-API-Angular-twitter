@@ -2,17 +2,28 @@ package rest.twitter.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import rest.twitter.domian.*;
 import rest.twitter.repository.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
 public class TweetController {
+
+//    @Autowired
+//    RedisTemplate redisTemplate;
+
+    @Autowired
+    RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
     TweetRepository repository;
@@ -27,6 +38,14 @@ public class TweetController {
     LikeTableRepository repositoryLikeTable;
 
 
+    //HashOperations<String, Long, Tweet> hashOperations = redisTemplate.opsForHash();
+
+//    @Resource(name = "redisTemplate")
+//    HashOperations<String, Long, Tweet> hashOperations;
+
+    private final static String KEY_TWEET="tweet";
+
+
     @GetMapping("/tweets")
     List<Tweet> getAll() {
         return repository.findAll();
@@ -34,7 +53,25 @@ public class TweetController {
 
     @GetMapping("/tweet/{id}")
     Tweet getOne(@PathVariable long id) {
-        return repository.findById(id).get();
+
+        HashOperations<String, Long, Tweet> hashOperations = redisTemplate.opsForHash();
+        boolean hasKey=hashOperations.hasKey(KEY_TWEET,id);
+        if(hasKey) {
+            log.info("get from cache");
+            return hashOperations.get(KEY_TWEET, id);
+        }
+
+        //not in cache
+        Tweet tweet=null;
+        Optional<Tweet> opTweet=repository.findById(id);
+        if(opTweet.isPresent())
+            tweet=opTweet.get();
+        log.info("add to cache");
+        hashOperations.put(KEY_TWEET,id,tweet);
+        long ttl=10;
+        redisTemplate.expire(KEY_TWEET,ttl, TimeUnit.SECONDS);
+        return tweet;
+        //return repository.findById(id).get();
     }
 
     @PostMapping("/tweet")
