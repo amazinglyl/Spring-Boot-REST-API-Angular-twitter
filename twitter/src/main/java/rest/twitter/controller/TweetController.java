@@ -3,6 +3,7 @@ package rest.twitter.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import rest.twitter.domian.*;
@@ -12,6 +13,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -19,9 +21,14 @@ import java.util.stream.Collectors;
 @RestController
 public class TweetController {
 
+
+    private final static String KEY_TWEET="tweet";
+    private final static String KEY_TWEET_COMMENTS="tweetcomments";
+
 //    @Autowired
 //    RedisTemplate redisTemplate;
 
+    //@Resource
     @Autowired
     RedisTemplate<String, Object> redisTemplate;
 
@@ -37,20 +44,41 @@ public class TweetController {
     @Autowired
     LikeTableRepository repositoryLikeTable;
 
-
-    //HashOperations<String, Long, Tweet> hashOperations = redisTemplate.opsForHash();
+    private Random rand=new Random();
 
 //    @Resource(name = "redisTemplate")
 //    HashOperations<String, Long, Tweet> hashOperations;
 
-    private final static String KEY_TWEET="tweet";
+    @Resource(name = "redisTemplate")
+    ListOperations<String,CommentTable> listOperations;
 
 
+    // common method of redisTemplate
+    private boolean hasKey(String key){
+        try{
+            return redisTemplate.hasKey(key);
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    private boolean expire(String key, long ttl){
+        try{
+            redisTemplate.expire(key,ttl,TimeUnit.SECONDS);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+
+    // get all tweets
     @GetMapping("/tweets")
     List<Tweet> getAll() {
         return repository.findAll();
     }
 
+    // get tweet with {id}
     @GetMapping("/tweet/{id}")
     Tweet getOne(@PathVariable long id) {
 
@@ -68,12 +96,13 @@ public class TweetController {
             tweet=opTweet.get();
         log.info("add to cache");
         hashOperations.put(KEY_TWEET,id,tweet);
-        long ttl=10;
-        redisTemplate.expire(KEY_TWEET,ttl, TimeUnit.SECONDS);
+        long ttl=100+rand.nextInt(100);
+        expire(KEY_TWEET,ttl);
         return tweet;
         //return repository.findById(id).get();
     }
 
+    //post a tweet
     @PostMapping("/tweet")
     Tweet createOne(@RequestBody Tweet tweet) {
 
@@ -94,7 +123,20 @@ public class TweetController {
 
     @GetMapping("/tweet/comments/{id}")
     List<CommentTable> getAllComments(@PathVariable long id){
-        return new ArrayList<>(repositoryComment.findByTweet(id));
+
+        String key=KEY_TWEET_COMMENTS+id;
+        boolean hasKey=hasKey(key);
+        if(hasKey){
+            log.info("get comments from cache");
+            return listOperations.range(key,0,-1);
+        }
+
+        List<CommentTable> list = new ArrayList<>(repositoryComment.findByTweet(id));
+        log.info("put comments in cache");
+        listOperations.leftPushAll(key,list);
+        long ttl=100+rand.nextInt(100);
+        redisTemplate.expire(key,ttl,TimeUnit.SECONDS);
+        return list;
     }
 
     //Get all likes of the tweet identified by {id}
@@ -157,6 +199,8 @@ public class TweetController {
 
         CommentTable table = repositoryComment.findById(id).get();
 
+        listOperations.remove(KEY_TWEET_COMMENTS+table.getTweet(),1,table);
+
         Tweet tweet = repository.findById(table.getTweet()).get();
         tweet.setComments(tweet.getComments()-1);
         repository.save(tweet);
@@ -184,6 +228,17 @@ public class TweetController {
 
     @DeleteMapping("tweet/{id}")
     String deleteTweet(@PathVariable long id){
+
+        //delete this tweet in cache
+        HashOperations<String, Long, Tweet> hashOperations = redisTemplate.opsForHash();
+        if(hashOperations.hasKey(KEY_TWEET,id))
+            hashOperations.delete(KEY_TWEET,id);
+
+        // delete corresponding comments list if exist in cache
+        if(hasKey(KEY_TWEET_COMMENTS+id))
+            redisTemplate.delete(KEY_TWEET_COMMENTS+id);
+
+        // delete data in database
         Tweet tweet = repository.findById(id).get();
         tweet.setDisable(true);
         repository.save(tweet);
