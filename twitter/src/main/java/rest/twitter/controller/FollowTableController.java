@@ -2,12 +2,15 @@ package rest.twitter.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ListOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import rest.twitter.domian.*;
 import rest.twitter.repository.*;
 import rest.twitter.exception.*;
 
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +26,14 @@ public class FollowTableController {
     UserRepository repositoryUser;
     @Autowired
     TweetRepository repositoryTweet;
+
+    @Resource
+    RedisTemplate<String, Object> redisTemplate;
+
+    @Resource(name = "redisTemplate")
+    ListOperations<String, Tweet> listOperations;
+
+    private static final String KEY_USER_TWEET="keyUserTweet";
 
     //get all follow pairs
 
@@ -126,8 +137,12 @@ public class FollowTableController {
     @GetMapping("/usertweets/{id}")
     List<Tweet> getSelfTweet(@PathVariable long id) {
 
-        List<Tweet> res = repositoryTweet.findByAuthorAndDisable(id,false);
+        String key=KEY_USER_TWEET+id;
+        if(redisTemplate.hasKey(key))
+            return listOperations.range(key,0,-1);
 
+        List<Tweet> res = repositoryTweet.findByAuthorAndDisable(id,false);
+        listOperations.leftPushAll(key,res);
         return res;
     }
 
@@ -139,8 +154,15 @@ public class FollowTableController {
         List<Tweet> res = new ArrayList<>();
         for(FollowTable f:list){
 
-                List<Tweet> cur= repositoryTweet.findByAuthorAndDisable(f.getFollowedId(),false);
-                res.addAll(cur);
+            String key=KEY_USER_TWEET+f.getFollowedId();
+            if(redisTemplate.hasKey(key))
+                 res.addAll(listOperations.range(key,0,-1));
+
+            else {
+                List<Tweet> tweetList = repositoryTweet.findByAuthorAndDisable(f.getFollowedId(), false);
+                listOperations.leftPushAll(key, tweetList);
+                res.addAll(tweetList);
+            }
 
         }
         return res;
