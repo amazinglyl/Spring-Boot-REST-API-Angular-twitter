@@ -22,8 +22,10 @@ public class FollowTableController {
 
     @Autowired
     FollowTableRepository repository;
+
     @Autowired
     UserRepository repositoryUser;
+
     @Autowired
     TweetRepository repositoryTweet;
 
@@ -33,42 +35,60 @@ public class FollowTableController {
     @Resource(name = "redisTemplate")
     ListOperations<String, Tweet> listOperations;
 
+    @Resource(name = "redisTemplate")
+    ListOperations<String, User> listOperationsUser;
+
     private static final String KEY_USER_TWEET="keyUserTweet";
+    private static final String KEY_USER_FOLLOW="followers";
 
-    //get all follow pairs
-
+    /**
+     * get all follow pairs
+     * not practical
+     */
     @GetMapping("/follows")
     List<FollowTable> getAll(){
         return repository.findAll();
     }
 
-    //check if the copule already exist
-
+    /**
+     * check if already follows
+     * @param table
+     * @return
+     */
     @GetMapping("/follow/check")
     boolean check(@RequestBody FollowTable table){
         //return repository.findById(new FollowTableId(table.getFollowedId(),table.getFollowerId())).isPresent();
         return repository.countByFollowedIdAndFollowerId(table.getFollowedId(),table.getFollowerId())!=0;
     }
 
+    /**
+     * second way to check if already follows
+     * @param followedId
+     * @param followerId
+     * @return
+     */
     @GetMapping("/follow/check2")
     boolean check(@RequestParam(value="followedId") long followedId,@RequestParam(value="followerId") long followerId){
         //return repository.findById(new FollowTableId(table.getFollowedId(),table.getFollowerId())).isPresent();
         return repository.countByFollowedIdAndFollowerId(followedId,followerId)!=0;
     }
 
-
-    // get all followers' ID of User {id}
-
+    /**
+     * get all followers' Id of User {id}
+     * @param id
+     * @return
+     */
     @GetMapping("/follow/{id}")
     List<FollowTable> getFollowersId(@PathVariable long id){
         return repository.findByFollowedId(id);
     }
 
-
-    //get all followers' User domain with User's {id}
-
+    /**
+     * get all followers' User domain with User's {id}
+     */
     @GetMapping("/follow/follower")
     List<User> getFollowers(@RequestParam(value="id",required = true) long id){
+
         return repository.findByFollowedId(id).stream()
                 .map(x->repositoryUser.findById(x.getFollowerId())
                         .orElseThrow(()->new UserNotFoundException(x.getFollowerId()))).collect(Collectors.toList());
@@ -82,21 +102,33 @@ public class FollowTableController {
 //            User user=repositoryUser.findById(followerId).orElseThrow(()->new UserNotFoundException(followerId));
 //            res.add(user);
 //        }
-//
 //        return res;
     }
 
-    //get all following User domain for User {id}
-
+    /**
+     * get all following User domain for User {id}
+     * @param id
+     * @return
+     */
     @GetMapping("follow/following")
     List<User> getFollowings(@RequestParam(value="id",required = true) long id) {
-        return repository.findByFollowerId(id).stream()
+        String key = KEY_USER_FOLLOW+id;
+
+        // get if in cache
+        if(redisTemplate.hasKey(key))
+            return listOperationsUser.range(key,0,-1);
+
+        //get from database and save in cache
+        List<User> list= repository.findByFollowerId(id).stream()
                 .map(x -> repositoryUser.findById(x.getFollowedId())
                         .orElseThrow(() -> new UserNotFoundException(x.getFollowedId()))).collect(Collectors.toList());
+        listOperationsUser.leftPushAll(key,list);
+        return list;
     }
 
-    // follow other people
-
+    /**
+     * follow other people
+     */
     @PostMapping("/follow")
     FollowTable postFollow(@RequestBody FollowTable table){
 
@@ -110,10 +142,19 @@ public class FollowTableController {
         user2.setFollowings(user.getFollowings()+1);
         repositoryUser.save(user2);
 
+        //delete cache
+        String key=KEY_USER_FOLLOW+table.getFollowerId();
+        if(redisTemplate.hasKey(key))
+            redisTemplate.delete(key);
+        if(redisTemplate.hasKey(KEY_USER_TWEET+table.getFollowerId()))
+            redisTemplate.delete(KEY_USER_TWEET+table.getFollowerId());
         //put table;
         return repository.save(table);
     }
 
+    /**
+     * delete follow
+     */
     @DeleteMapping("follow")
     void deleteFollow(@RequestBody FollowTable table){
 
@@ -127,6 +168,12 @@ public class FollowTableController {
         user1.setFollowings(user.getFollowings()-1);
         repositoryUser.save(user1);
 
+        //delete cache
+        String key=KEY_USER_FOLLOW+table.getFollowedId();
+        if(redisTemplate.hasKey(key))
+            redisTemplate.delete(key);
+        if(redisTemplate.hasKey(KEY_USER_TWEET+table.getFollowerId()))
+            redisTemplate.delete(KEY_USER_TWEET+table.getFollowerId());
         //delete this followMap
         repository.delete(table);
     }

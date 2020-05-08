@@ -24,6 +24,10 @@ public class UserController {
 
     private final static String KEY_USER="user";
 
+    /**
+     * get all users
+     * @return
+     */
     @GetMapping("/users")
     List<User> all(){
         return repository.findAll();
@@ -32,16 +36,6 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     User getUser(@PathVariable long id){
-//        try{
-//            return repository.getOne(id);
-//        }
-//        catch (UserNotFoundException e){
-//            System.out.println("There is no user"+id);
-//
-//        }
-//        return null;
-
-        // if in cache, get from cache
 
         HashOperations<String, Long, User> hashOperations=redisTemplate.opsForHash();
         if(hashOperations.hasKey(KEY_USER,id)){
