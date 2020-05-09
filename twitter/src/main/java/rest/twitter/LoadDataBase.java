@@ -28,7 +28,7 @@ public class LoadDataBase {
             }
             Set<String> set = new HashSet<>();
             Random rand=new Random();
-            for(int i=0;i<500;i++){
+            for(int i=0;i<10000;i++){
                 int followedId=rand.nextInt(100)+1;
                 int followerId=rand.nextInt(100)+1;
                 String temp=""+followedId+" "+followerId;

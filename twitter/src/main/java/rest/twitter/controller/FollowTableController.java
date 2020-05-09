@@ -202,10 +202,13 @@ public class FollowTableController {
         for(FollowTable f:list){
 
             String key=KEY_USER_TWEET+f.getFollowedId();
-            if(redisTemplate.hasKey(key))
-                 res.addAll(listOperations.range(key,0,-1));
+            if(redisTemplate.hasKey(key)) {
+                log.info("get all tweets from cache");
+                res.addAll(listOperations.range(key, 0, -1));
+            }
 
             else {
+                log.info("get all tweets from db");
                 List<Tweet> tweetList = repositoryTweet.findByAuthorAndDisable(f.getFollowedId(), false);
                 listOperations.leftPushAll(key, tweetList);
                 res.addAll(tweetList);
