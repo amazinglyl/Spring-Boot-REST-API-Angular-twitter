@@ -1,5 +1,6 @@
 package rest.twitter.controller;
 
+import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
@@ -91,16 +92,24 @@ public class TweetController {
             log.info("get from cache");
             return hashOperations.get(KEY_TWEET, id);
         }
-        //not in cache
-        Tweet tweet=null;
-        Optional<Tweet> opTweet=repository.findById(id);
-        if(opTweet.isPresent())
-            tweet=opTweet.get();
-        log.info("add to cache");
-        hashOperations.put(KEY_TWEET,id,tweet);
-        long ttl=100+rand.nextInt(100);
-        expire(KEY_TWEET,ttl);
-        return tweet;
+        else {
+            synchronized(this) {
+                hasKey=hashOperations.hasKey(KEY_TWEET,id);
+                if(hasKey)
+                    return hashOperations.get(KEY_TWEET,id);
+                else {
+                    Tweet tweet = null;
+                    Optional<Tweet> opTweet = repository.findById(id);
+                    if (opTweet.isPresent())
+                        tweet = opTweet.get();
+                    log.info("add to cache");
+                    hashOperations.put(KEY_TWEET, id, tweet);
+                    long ttl = 100 + rand.nextInt(100);
+                    expire(KEY_TWEET, ttl);
+                    return tweet;
+                }
+            }
+        }
         //return repository.findById(id).get();
     }
 
