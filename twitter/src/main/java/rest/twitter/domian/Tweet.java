@@ -27,11 +27,20 @@ public class Tweet implements Serializable {
 
     private boolean disable;
 
+    private long visit;
+
     public Tweet(){};
 
     public Tweet( long author_,String text_){
 
         author=author_;
         text=text_;
+    }
+
+    public Tweet( long author_,String text_,long _visit){
+
+        author=author_;
+        text=text_;
+        visit=_visit;
     }
 }

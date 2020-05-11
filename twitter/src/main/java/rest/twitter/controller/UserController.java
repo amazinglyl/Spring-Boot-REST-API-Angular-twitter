@@ -1,6 +1,7 @@
 package rest.twitter.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -10,14 +11,21 @@ import rest.twitter.exception.UserNotFoundException;
 import rest.twitter.exception.UserExistException;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
 
     @Autowired
     UserRepository repository;
+
+    @Autowired
+    TweetRepository tweetRepository;
 
     @Resource
     RedisTemplate<String,Object> redisTemplate;
@@ -60,6 +68,33 @@ public class UserController {
         return repository.save(user);
     }
 
+    /**
+     * get current hot tweets from cahce
+     * @return
+     */
+    @GetMapping("/hotTweets")
+    List<Tweet> getHotTweets(){
+//        Sort sort = Sort.by("visit").descending();
+//        List<Tweet> list =tweetRepository.findFirst50ByDisable(false,sort);
+//        return list;
+        return redisTemplate.opsForList().range("hotTweets",0,-1).stream().map(x->(Tweet)x).collect(Collectors.toList());
+    }
 
+    /**
+     * get recommand tweets for user {id}
+     */
+    @GetMapping("/recommandTweets/{id}")
+    List<Tweet> getRecommandTweets(@PathVariable long id){
+        Set<Long> set = new HashSet<>();
+        List<Tweet> list = new ArrayList<>();
+        String key = "recommandTweets"+id;
+        if(!redisTemplate.hasKey(key))
+            return list;
+        set = (Set<Long>) redisTemplate.opsForValue().get("recommandTweets"+id);
+        for(long tweetId:set){
+            list.add(tweetRepository.findById(tweetId).get());
+        }
+        return list;
+    }
 
 }
