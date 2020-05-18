@@ -51,6 +51,9 @@ public class CronJob {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
+    /**
+     * put hot tweets in cache
+     */
     @Scheduled(fixedRate = 20000)
     public void searchHotTweets() {
         Sort sort = Sort.by("visit").descending();
