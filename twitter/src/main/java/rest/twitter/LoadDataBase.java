@@ -24,7 +24,7 @@ public class LoadDataBase {
             String[] LasttName=new String[]{"Last1","Last2","Last3","Last4","Last5","Last6","Last7","Last8","Last9","Last10"};
             for(String first:firstName){
                 for(String last:LasttName){
-                    log.info("Preloading " + repository.save(new User(first+" "+last, "Hello! I am "+ first+" "+last+" !")));
+                    log.info("Preloading " + repository.save(new User(first+""+last, "Hello! I am "+ first+" "+last+" !")));
                 }
             }
 

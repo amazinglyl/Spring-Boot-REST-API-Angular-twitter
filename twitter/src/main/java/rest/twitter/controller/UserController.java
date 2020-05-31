@@ -41,7 +41,23 @@ public class UserController {
         return repository.findAll();
     }
 
+    /**
+     * get for login
+     * @param name
+     * @param password
+     * @return
+     */
+    @GetMapping("/user")
+    User login(@RequestParam String name, @RequestParam String password){
+        List<User> user = repository.findByName(name);
+        return user.get(0);
+    }
 
+    /**
+     * get user information based on id
+     * @param id
+     * @return
+     */
     @GetMapping("/users/{id}")
     User getUser(@PathVariable long id){
 
