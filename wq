@@ -1,0 +1,20 @@
+[1mdiff --git a/twitter/src/main/java/rest/twitter/CrosConfigurer.java b/twitter/src/main/java/rest/twitter/CrosConfigurer.java[m
+[1mindex f9d2e4f..1559108 100644[m
+[1m--- a/twitter/src/main/java/rest/twitter/CrosConfigurer.java[m
+[1m+++ b/twitter/src/main/java/rest/twitter/CrosConfigurer.java[m
+[36m@@ -1,10 +1,10 @@[m
+ package rest.twitter;[m
+ [m
+[31m-import org.springframework.context.annotation.Bean;[m
+[31m-import org.springframework.context.annotation.Configuration;[m
+[31m-import org.springframework.web.servlet.config.annotation.CorsRegistry;[m
+[31m-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;[m
+[31m-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;[m
+[32m+[m[32m        import org.springframework.context.annotation.Bean;[m
+[32m+[m[32m        import org.springframework.context.annotation.Configuration;[m
+[32m+[m[32m        import org.springframework.web.servlet.config.annotation.CorsRegistry;[m
+[32m+[m[32m        import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;[m
+[32m+[m[32m        import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;[m
+ [m
+ @Configuration[m
+ public class CrosConfigurer {[m

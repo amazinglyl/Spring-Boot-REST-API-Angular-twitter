@@ -5,10 +5,11 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 
 @Data
 @Entity
-public class LikeTable {
+public class LikeTable implements Serializable {
     @Id
     @GeneratedValue
     private long id;
