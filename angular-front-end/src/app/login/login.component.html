@@ -1,0 +1,21 @@
+<div class="container">
+    <div class="login-form">
+        <form name="form" #f="ngForm" (ngSubmit)="login()">
+            <h2 class="text-center">Log In</h2>
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="UserName" name="username" [(ngModel)]="model.name" #username="ngModel" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> LOG IN</button>
+            </div>
+            <div class="clearfix">
+                <label class="float-left checkbox-inline"><input type="checkbox"> Remember me</label>
+                <a href="#" class="float-right">Forgot Password?</a>
+            </div>  
+        </form>
+        <p class="text-center"><a routerLink="/register">Create Account</a></p>    
+    </div>
+</div>
