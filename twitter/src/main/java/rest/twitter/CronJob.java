@@ -54,7 +54,7 @@ public class CronJob {
     /**
      * put hot tweets in cache
      */
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 200000)
     public void searchHotTweets() {
         Sort sort = Sort.by("visit").descending();
         List<Tweet> list =repository.findFirst50ByDisable(false,sort);
@@ -67,7 +67,7 @@ public class CronJob {
      * which to read
      * 线程池和hashtable去handle
      */
-    @Scheduled(fixedRate = 20000)
+    @Scheduled(fixedRate = 200000)
     public void tweetRecommand(){
 
         List<LikeTable> list = likeRepository.findAll();

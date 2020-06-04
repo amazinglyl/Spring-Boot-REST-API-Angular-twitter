@@ -185,10 +185,14 @@ public class FollowTableController {
     List<Tweet> getSelfTweet(@PathVariable long id) {
 
         String key=KEY_USER_TWEET+id;
-        if(redisTemplate.hasKey(key))
-            return listOperations.range(key,0,-1);
-
+        log.info(key);
+        if(redisTemplate.hasKey(key)) {
+            log.info("inside");
+            return listOperations.range(key, 0, -1);
+        }
+        log.info("good");
         List<Tweet> res = repositoryTweet.findByAuthorAndDisable(id,false);
+        log.info(""+res.size());
         listOperations.leftPushAll(key,res);
         return res;
     }

@@ -1,30 +1,50 @@
 <div class="container">
-    <div class="jumbotron mb-0">
+    <div id="jumbotron" class="jumbotron mb-0 text-center" >
         <h1>Welcom Back!</h1>
-        <p>Explore the world! Enjoy the life!</p>
+        <p class="">Explore the world! Enjoy the life!</p>
     </div>
     <div class="row">
         <div class="col-sm-3">
             <nav class="navbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="login">Home</a>
+                <ul class="navbar-nav ml-4">
+                    <li class="nav-item mt-4">
+                        <a class="nav-link" href="login">
+                            <i class="fas fa-home fa-2x" style="color:blue;"></i>
+                            <span class="pl-3" style="font-size: 30px; color: blue;">Home</span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login">Tweets</a>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="login">
+                            <i class="fab fa-twitter fa-2x" style="color: black;"></i>
+                            <span class="pl-3" style="font-size: 30px;color: black;">Tweets</span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login">Profile</a>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="login">
+                            <i class="fas fa-id-card fa-2x" style="color: black;"></i>
+                            <span class="pl-3" style="font-size: 30px; color: black;">Profile</span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login">Follwers</a>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="login">
+                            <i class="fas fa-users fa-2x" style="color: black;"></i>
+                            <span class="pl-3" style="font-size: 30px; color: black;">Follwers</span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login">Followings</a>
+
+                    <li class="nav-item ">
+                        <a class="nav-link" href="login">
+                            <i class="far fa-envelope fa-2x" style="color: black;"></i>
+                            <span class="pl-3" style="font-size: 30px; color: black;">Message</span>
+                        </a>
                     </li>
-                    <li class="nav-item">
+                   
+                    <li class="nav-item justify-content-center">
                         <!-- Button to Open the Modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                        <button type="button" class="btn btn-primary btn-block mt-3" data-toggle="modal" data-target="#myModal">
                             Tweet
                         </button>
                 
@@ -60,14 +80,14 @@
             </nav>
         </div>
 
-        <div class="col-sm-9 border-left">
+        <div class="col-sm-9">
 
-            <nav class="navbar navbar-expand border-bottom topbar mb-4">
+            <nav class="navbar navbar-expand border pb-1">
                
 
-                <form class="form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100">
+                <form class="form-inline mr-auto ">
                     <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                        <input type="text" class="form-control bg-light border" style="width: 470px;" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="button">
                                 <i class="fas fa-search fa-sm"></i>
@@ -80,8 +100,8 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown no-arrow">
                         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                        <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                        <span class="mr-2 text-dark" style="font-size:x-large;">William</span>
+                        <i class="fas fa-user fa-2x"></i>
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -107,13 +127,57 @@
                 </ul>
             </nav>
 
-            <div class="row bg-light height-100%">
-                <div class="col-sm-8 border-right">
-                    <h4 class="text-center">Tweets</h4>
+            <div class="row">
+                <div class="col-sm-8">
+                    <ul class="list-group">
+                        <li class="list-group-item p-0" *ngFor="let tweet of tweets">
+                            <div class="media p-2">
+                                <i class="fas fa-user-circle fa-3x mr-3"></i>
+                                <div class="media-body">
+                                    <h4>William <small><i>Posted on June 01, 2020</i></small></h4>
+                                    <hr>
+                                    <p>{{tweet["text"]}}</p>
+                                    <ul class="nav nav-pills nav-justified m-0 ">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" href="#"><i class="far fa-heart"></i>  {{tweet["comments"]}}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" href="#"><i class="far fa-comment"></i>  {{tweet["likes"]}}</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" href="#"><i class="far fa-share-square"></i>  {{tweet["visit"]}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
 
-                <div class="col-sm-3">
-                    <h4 class="text-center">News</h4>
+                <div class="col-sm-4">
+                    <div class="card mt-3 border-0 bg-light">
+                        <div class="card-header font-weight-bold">
+                            What's Happening
+                        </div>
+
+                        <div class="card-body ">
+                            <ol type="1" class="list-group list-group-flush">
+                                <li class="list-group-item bg-light">
+                                    <a class="text-dark" href="https://twitter.com/i/events/1240677133971644419">COVID-19: update</a>
+                                </li>
+
+                                <li class="list-group-item bg-light">
+                                    <a class="text-dark" href="https://twitter.com/i/events/1265874933432737792">Us Protest: all lives matter</a>
+                                </li>
+
+                                <li class="list-group-item bg-light">
+                                    <a class="text-dark" href="https://www.forbes.com/sites/niallmccarthy/2020/06/04/why-spacex-is-a-game-changer-for-nasa-infographic/#7fda36316565">Space X: game changer</a>
+                                </li>
+
+
+                            </ol>
+                        </div>
+                    </div>
                 </div>
             </div>
 
