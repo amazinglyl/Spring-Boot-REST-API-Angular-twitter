@@ -1,11 +1,11 @@
 <div class="container">
-    <div id="jumbotron" class="jumbotron mb-0 text-center" >
+    <div id="jumbotron" class="jumbotron mb-0 text-center sticky-top" >
         <h1>Welcom Back!</h1>
         <p class="">Explore the world! Enjoy the life!</p>
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <nav class="navbar">
+            <nav class="navbar position-fixed">
                 <ul class="navbar-nav ml-4">
                     <li class="nav-item mt-4">
                         <a class="nav-link" href="login">
@@ -82,8 +82,7 @@
 
         <div class="col-sm-9">
 
-            <nav class="navbar navbar-expand border pb-1">
-               
+            <nav class="navbar navbar-expand border pb-1 ">
 
                 <form class="form-inline mr-auto ">
                     <div class="input-group">
@@ -118,7 +117,7 @@
                             Activity Log
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <a class="dropdown-item" routerLink="logn" data-toggle="modal" data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout
                         </a>
@@ -174,7 +173,9 @@
                                     <a class="text-dark" href="https://www.forbes.com/sites/niallmccarthy/2020/06/04/why-spacex-is-a-game-changer-for-nasa-infographic/#7fda36316565">Space X: game changer</a>
                                 </li>
 
-
+                                <li class="list-group-item bg-light">
+                                    <a class="text-dark" href="https://twitter.com/realDonaldTrump">President Trump: MEGA!</a>
+                                </li>
                             </ol>
                         </div>
                     </div>
