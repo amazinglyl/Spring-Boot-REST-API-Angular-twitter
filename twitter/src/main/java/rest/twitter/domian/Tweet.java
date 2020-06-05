@@ -29,7 +29,7 @@ public class Tweet implements Serializable {
 
     private long visit;
 
-    //private String user;
+    private String user;
 
     public Tweet(){};
 
@@ -46,9 +46,9 @@ public class Tweet implements Serializable {
         visit=_visit;
     }
 
-//    public Tweet( long author_,String text_, String _userName){
-//        user=_userName;
-//        author=author_;
-//        text=text_;
-//    }
+    public Tweet( long author_,String text_, String _userName){
+        user=_userName;
+        author=author_;
+        text=text_;
+    }
 }

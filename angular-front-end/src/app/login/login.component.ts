@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
               if(res.status===200){
                 let id:number=res.body["id"];
                 console.log(id);
-                this.router.navigate(['/user',id])
+                this.router.navigate(['/user',id,'home'])
               }
           })
   }

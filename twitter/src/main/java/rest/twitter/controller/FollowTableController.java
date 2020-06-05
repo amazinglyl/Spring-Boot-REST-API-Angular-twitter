@@ -186,10 +186,10 @@ public class FollowTableController {
 
         String key=KEY_USER_TWEET+id;
         log.info(key);
-        if(redisTemplate.hasKey(key)) {
-            log.info("inside");
-            return listOperations.range(key, 0, -1);
-        }
+//        if(redisTemplate.hasKey(key)) {
+//            log.info("inside");
+//            return listOperations.range(key, 0, -1);
+//        }
         log.info("good");
         List<Tweet> res = repositoryTweet.findByAuthorAndDisable(id,false);
         log.info(""+res.size());
@@ -206,7 +206,7 @@ public class FollowTableController {
         for(FollowTable f:list){
 
             String key=KEY_USER_TWEET+f.getFollowedId();
-            if(redisTemplate.hasKey(key)) {
+            if(false&&redisTemplate.hasKey(key)) {
                 log.info("get all tweets from cache");
                 res.addAll(listOperations.range(key, 0, -1));
             }

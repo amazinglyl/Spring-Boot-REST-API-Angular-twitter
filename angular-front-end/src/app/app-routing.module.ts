@@ -4,12 +4,25 @@ import {RouterModule,Routes} from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
 import {RegisterComponent} from './register/register.component';
-
+import { TweestlistComponent } from './tweestlist/tweestlist.component';
+import { MyTweetsComponent } from './my-tweets/my-tweets.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { MyFollowerComponent } from './my-follower/my-follower.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'user/:id', component: UserComponent},
+  { 
+    path: 'user/:id', 
+    component: UserComponent,
+    children: [
+      {path: 'home', component: TweestlistComponent},
+      {path: 'tweets', component: MyTweetsComponent},
+      {path: 'profile', component: MyProfileComponent},
+      {path: 'followers', component: MyFollowerComponent},
+    ]
+  
+  },
   { path: 'register', component: RegisterComponent}
 ];
 

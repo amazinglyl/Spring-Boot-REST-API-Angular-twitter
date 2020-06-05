@@ -2,3 +2,20 @@
     background-image: url('src/assets/image/jumbotronbg.jpg');
     background-size: cover;
   }
+
+  .container .row .col-sm-3 .navbar .navbar-nav.ml-4 .nav-item .nav-link i{
+    color:black;
+  }
+
+.container .row .col-sm-3 .navbar .navbar-nav.ml-4 .nav-item .nav-link i.selected{
+  color: blue;
+}
+
+.container .row .col-sm-3 .navbar .navbar-nav.ml-4 .nav-item .nav-link span{
+  color:black;
+}
+
+.container .row .col-sm-3 .navbar .navbar-nav.ml-4 .nav-item .nav-link span.selected{
+  color: blue;
+}
+

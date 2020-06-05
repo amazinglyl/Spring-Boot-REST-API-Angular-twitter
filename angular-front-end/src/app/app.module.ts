@@ -9,13 +9,21 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserComponent } from './user/user.component';
 import { RegisterComponent } from './register/register.component';
+import { TweestlistComponent } from './tweestlist/tweestlist.component';
+import { MyTweetsComponent } from './my-tweets/my-tweets.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
+import { MyFollowerComponent } from './my-follower/my-follower.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     UserComponent,
-    RegisterComponent
+    RegisterComponent,
+    TweestlistComponent,
+    MyTweetsComponent,
+    MyProfileComponent,
+    MyFollowerComponent
   ],
   imports: [
     BrowserModule,

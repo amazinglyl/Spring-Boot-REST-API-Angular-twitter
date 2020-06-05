@@ -1,0 +1,23 @@
+<ul class="list-group">
+    <li class="list-group-item p-0" *ngFor="let tweet of tweets">
+        <div class="media p-2">
+            <i class="fas fa-user-circle fa-3x mr-3"></i>
+            <div class="media-body">
+                <h4>{{tweet["user"]}} <small><i>Posted on June 01, 2020</i></small></h4>
+                <hr>
+                <p>{{tweet["text"]}}</p>
+                <ul class="nav nav-pills nav-justified m-0 ">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#"><i class="far fa-heart"></i>  {{tweet["comments"]}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#"><i class="far fa-comment"></i>  {{tweet["likes"]}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="#"><i class="far fa-share-square"></i>  {{tweet["visit"]}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </li>
+</ul>
