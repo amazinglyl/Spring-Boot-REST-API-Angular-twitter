@@ -67,13 +67,6 @@ public class LoadDataBase {
                     likeSet.add(temp);
                 }
             }
-//            log.info("Preloading " + repository.save(new User("Bilbo Baggins", "burglar")));
-//            log.info("Preloading " + repository.save(new User("Frodo Baggins", "thief")));
-//            log.info("Preloading " + repository.save(new User("Dad Baggins", "Berserk")));
-//            //log.info("Preloading" + repositoryFollowTable.save(new FollowTable(1,2)));
-//            log.info("PreLoading" +repositoryFollowTable.save(new FollowTable(1,3)));
-//            log.info("PreLoading" +repositoryFollowTable.save(new FollowTable(2,3)));
-//            log.info("PreLoading" +repositoryFollowTable.save(new FollowTable(2,1)));
         };
     }
 

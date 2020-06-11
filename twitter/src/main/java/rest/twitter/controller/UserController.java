@@ -96,9 +96,6 @@ public class UserController {
      */
     @GetMapping("/hotTweets")
     List<Tweet> getHotTweets(){
-//        Sort sort = Sort.by("visit").descending();
-//        List<Tweet> list =tweetRepository.findFirst50ByDisable(false,sort);
-//        return list;
         return redisTemplate.opsForList().range("hotTweets",0,-1).stream().map(x->(Tweet)x).collect(Collectors.toList());
     }
 
@@ -125,11 +122,5 @@ public class UserController {
         HashOperations<String,String,String> hashOperation=redisTemplate2.opsForHash();
         return hashOperation.entries(key);
     }
-
-//    @GetMapping("test")
-//    String test(){
-//        String key="foo";
-//        return (String)redisTemplate.opsForValue().get(key);
-//        }
 
 }

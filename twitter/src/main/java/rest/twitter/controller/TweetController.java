@@ -46,9 +46,6 @@ public class TweetController {
 
     private Random rand=new Random();
 
-//    @Resource(name = "redisTemplate")
-//    HashOperations<String, Long, Tweet> hashOperations;
-
     @Resource(name = "template1")
     private ListOperations<String,CommentTable> listOperations;
 

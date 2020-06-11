@@ -92,17 +92,6 @@ public class FollowTableController {
         return repository.findByFollowedId(id).stream()
                 .map(x->repositoryUser.findById(x.getFollowerId())
                         .orElseThrow(()->new UserNotFoundException(x.getFollowerId()))).collect(Collectors.toList());
-//        log.info("getFollowTable");
-//        List<FollowTable> list=  repository.findByFollowedId(id);
-//        log.info("geUser");
-//        List<User>  res= new ArrayList<>();
-//
-//        for (FollowTable f : list) {
-//            long followerId=f.getFollowerId();
-//            User user=repositoryUser.findById(followerId).orElseThrow(()->new UserNotFoundException(followerId));
-//            res.add(user);
-//        }
-//        return res;
     }
 
     /**

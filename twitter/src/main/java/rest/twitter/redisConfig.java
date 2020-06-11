@@ -18,27 +18,11 @@ import rest.twitter.domian.Tweet;
 @Configuration
 public class redisConfig {
 
-//    @Bean
-//    JedisConnectionFactory jedisConnectionFactory(){
-//        return new JedisConnectionFactory();
-//    }
-
-//    @Bean
-//    RedisConnectionFactory redisConnectionFactory(){
-//        return new JedisConnectionFactory();
-//    }
-
-
     @Bean(name="template1")
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory){
         RedisTemplate<String,Object> redisTemplate = new RedisTemplate<>();
         StringRedisSerializer redisSerializer=new StringRedisSerializer();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
-//        redisTemplate.setKeySerializer(redisSerializer);
-//        redisTemplate.setHashKeySerializer(redisSerializer);
-//        redisTemplate.setHashValueSerializer(redisSerializer);
-        //redisTemplate.setDefaultSerializer(redisSerializer);
-
         return  redisTemplate;
     }
 
