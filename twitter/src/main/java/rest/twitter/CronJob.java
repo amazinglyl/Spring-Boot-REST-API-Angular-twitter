@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -43,11 +44,14 @@ public class CronJob {
     UserRepository userRepository;
     @Autowired
     FollowTableRepository followTableRepository;
-    @Resource
+    @Autowired
     RedisTemplate<String,Object> redisTemplate;
 
     @Resource(name="redisTemplate")
     ListOperations<String,Tweet> listOperations;
+
+    @Resource(name = "redisTemplate")
+    HashOperations<String,String,String> hashOperations;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -61,6 +65,14 @@ public class CronJob {
         String key="hotTweets";
         listOperations.leftPushAll(key,list);
         redisTemplate.expire(key,30, TimeUnit.SECONDS);
+    }
+
+
+    @Scheduled(fixedRate = 200000)
+    public void test() {
+        String key="test";
+        hashOperations.put(key,"I","2");
+        hashOperations.put(key,"You","3");
     }
 
     /**

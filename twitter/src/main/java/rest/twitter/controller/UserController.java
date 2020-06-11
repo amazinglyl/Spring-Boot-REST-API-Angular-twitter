@@ -11,10 +11,7 @@ import rest.twitter.exception.UserNotFoundException;
 import rest.twitter.exception.UserExistException;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -29,6 +26,12 @@ public class UserController {
 
     @Resource
     RedisTemplate<String,Object> redisTemplate;
+
+    @Resource(name = "redisTemplate")
+    HashOperations<String,String,Integer> hashOperations;
+
+    @Resource(name = "redisTemplate")
+    HashOperations<String,String,String> hashOperations2;
 
     private final static String KEY_USER="user";
 
@@ -112,5 +115,17 @@ public class UserController {
         }
         return list;
     }
+
+    @GetMapping("hotWords")
+    Map<String, String> getHotWords(){
+        String key="hotWords";
+        return hashOperations2.entries(key);
+    }
+
+    @GetMapping("test")
+    String test(){
+        String key="foo";
+        return (String)redisTemplate.opsForValue().get(key);
+        }
 
 }
