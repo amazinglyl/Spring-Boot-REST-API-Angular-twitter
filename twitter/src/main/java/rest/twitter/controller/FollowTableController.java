@@ -32,10 +32,10 @@ public class FollowTableController {
     @Resource
     RedisTemplate<String, Object> redisTemplate;
 
-    @Resource(name = "redisTemplate")
+    @Resource(name = "template1")
     ListOperations<String, Tweet> listOperations;
 
-    @Resource(name = "redisTemplate")
+    @Resource(name = "template1")
     ListOperations<String, User> listOperationsUser;
 
     private static final String KEY_USER_TWEET="keyUserTweet";

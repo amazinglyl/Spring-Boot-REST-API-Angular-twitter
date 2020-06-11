@@ -1,6 +1,7 @@
 package rest.twitter.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -24,14 +25,16 @@ public class UserController {
     @Autowired
     TweetRepository tweetRepository;
 
-    @Resource
+    @Resource(name = "template1")
     RedisTemplate<String,Object> redisTemplate;
 
-    @Resource(name = "redisTemplate")
-    HashOperations<String,String,Integer> hashOperations;
+    @Resource(name = "template2")
+    RedisTemplate<String,String> redisTemplate2;
+//    @Resource(name = "redisTemplate")
+//    HashOperations<String,String,Integer> hashOperations;
 
-    @Resource(name = "redisTemplate")
-    HashOperations<String,String,String> hashOperations2;
+//    @Autowired
+//    RedisTemplate<String, String> redisTemplateSpecial;
 
     private final static String KEY_USER="user";
 
@@ -119,13 +122,14 @@ public class UserController {
     @GetMapping("hotWords")
     Map<String, String> getHotWords(){
         String key="hotWords";
-        return hashOperations2.entries(key);
+        HashOperations<String,String,String> hashOperation=redisTemplate2.opsForHash();
+        return hashOperation.entries(key);
     }
 
-    @GetMapping("test")
-    String test(){
-        String key="foo";
-        return (String)redisTemplate.opsForValue().get(key);
-        }
+//    @GetMapping("test")
+//    String test(){
+//        String key="foo";
+//        return (String)redisTemplate.opsForValue().get(key);
+//        }
 
 }

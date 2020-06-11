@@ -3,6 +3,7 @@ package rest.twitter.controller;
 import lombok.Synchronized;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -28,6 +29,7 @@ public class TweetController {
 
     //@Resource
     @Autowired
+    @Qualifier("template1")
     private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
@@ -47,7 +49,7 @@ public class TweetController {
 //    @Resource(name = "redisTemplate")
 //    HashOperations<String, Long, Tweet> hashOperations;
 
-    @Resource(name = "redisTemplate")
+    @Resource(name = "template1")
     private ListOperations<String,CommentTable> listOperations;
 
 

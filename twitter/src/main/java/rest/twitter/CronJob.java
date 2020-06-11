@@ -44,13 +44,14 @@ public class CronJob {
     UserRepository userRepository;
     @Autowired
     FollowTableRepository followTableRepository;
-    @Autowired
+
+    @Resource(name = "template1")
     RedisTemplate<String,Object> redisTemplate;
 
-    @Resource(name="redisTemplate")
+    @Resource(name="template1")
     ListOperations<String,Tweet> listOperations;
 
-    @Resource(name = "redisTemplate")
+    @Resource(name = "template2")
     HashOperations<String,String,String> hashOperations;
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
