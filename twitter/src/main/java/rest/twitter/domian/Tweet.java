@@ -29,6 +29,7 @@ public class Tweet implements Serializable {
 
     private long visit;
 
+    @Column(name = "userName")
     private String user;
 
     public Tweet(){};
