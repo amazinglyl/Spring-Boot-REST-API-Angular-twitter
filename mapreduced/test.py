@@ -5,6 +5,7 @@ import re
 import redis
 import schedule
 import time
+import psycopg2
 
 
 def cron():
@@ -13,16 +14,18 @@ def cron():
         return listoftuple
 
     r = redis.Redis(host='localhost', port=6379, db=0)
-    conn = jaydebeapi.connect("org.h2.Driver",  # driver class
-                              "jdbc:h2:tcp://localhost/~/test",  # JDBC url
-                              ["sa", ""],  # credentials
-                              "./h2-1.4.200.jar", )  # location of H2 jar
+
+    # conn = jaydebeapi.connect("org.h2.Driver",  # driver class
+    #                           "jdbc:h2:tcp://localhost/~/test",  # JDBC url
+    #                           ["sa", ""],  # credentials
+    #                           "./h2-1.4.200.jar", )  # location of H2 jar
 
     text = []
     try:
+        conn=psycopg2.connect("dbname='postgres' user='yilongluan' host='localhost' password=''")
         curs = conn.cursor()
         # Fetch the last 10 timestamps
-        curs.execute("SELECT * FROM \"TWEET\"")
+        curs.execute("SELECT * FROM tweet")
         data = curs.fetchall()
         print(len(data[0]))
         print(type(data[0]))
