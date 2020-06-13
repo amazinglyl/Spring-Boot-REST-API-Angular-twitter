@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit {
   baseUrl:string='http://10.20.20.76:8080/';
 
   userData:any={};
+  repeatPassword:string;
 
   constructor(
     private apiRquest:ApiRequestService,
