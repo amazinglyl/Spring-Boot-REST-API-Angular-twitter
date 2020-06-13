@@ -28,6 +28,16 @@ public class User implements Serializable {
 
     private  long followings;
 
+    private String password;
+
+    private String email;
+
+    private String phoneNumber;
+
+    private String address;
+
+    private String job;
+
     public User(){};
 
     public User( String name_,String profile_){
@@ -35,5 +45,17 @@ public class User implements Serializable {
         profile=profile_;
     }
 
+    public User( String name_,String profile_,String _password){
+        name=name_;
+        profile=profile_;
+        password=_password;
+    }
 
+    public User( String name_,String _email, String _phoneNumber, String _job,String _password){
+        name=name_;
+        email=_email;
+        phoneNumber=_phoneNumber;
+        job=_job;
+        password=_password;
+    }
 }

@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   model:any={};
+  fail:boolean;
 
   constructor(
     private loginService:LoginServiceService,
@@ -22,10 +23,14 @@ export class LoginComponent implements OnInit {
   login(){
       this.loginService.get(this.model.name,this.model.password)
           .subscribe(res=>{
+              console.log(res.status);
               if(res.status===200){
                 let id:number=res.body["id"];
                 console.log(id);
                 this.router.navigate(['/user',id,'home'])
+              }
+              else{
+                this.fail=true;
               }
           })
   }

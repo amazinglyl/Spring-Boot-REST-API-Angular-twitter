@@ -52,14 +52,14 @@ export class UserComponent implements OnInit {
 
   createTweet(){
     let data={
-      id: this.id,
+      author: this.id,
       text:this.tweetText,
     }
     
     this.apiRquest.post(this.baseUrl+"tweet",data)
         .subscribe(res=>{
             if(res.status===200){
-              this.router.navigate(['./tweets'])
+              this.router.navigate(['/user',this.id,'tweets'])
             }
         }
         )

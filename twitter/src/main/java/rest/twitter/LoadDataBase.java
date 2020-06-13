@@ -22,7 +22,7 @@ public class LoadDataBase {
             //add users
             String[] name=new String[]{"William","Jason","Eric","Liam"};
             for(String first:name){
-                    log.info("Preloading " + repository.save(new User(first, "Hello! I am "+ first+" !")));
+                    log.info("Preloading " + repository.save(new User(first, "Hello! I am "+ first+" !","123456")));
             }
 
             String[] tweets=new String[]{"You have no idea how much my heart races when I see you.",
