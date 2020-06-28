@@ -35,7 +35,6 @@ public class JwtTokenUserDetailsService implements UserDetailsService {
         User user=userList.get(0);
         String passwordEncode=passwordEncoder.encode(user.getPassword());
         GrantedAuthority authority=new SimpleGrantedAuthority("USER");
-        log.info(""+user.getName()+" "+passwordEncode);
         return org.springframework.security.core.userdetails.User//
                 .withUsername(username)//
                 .password(passwordEncode)//

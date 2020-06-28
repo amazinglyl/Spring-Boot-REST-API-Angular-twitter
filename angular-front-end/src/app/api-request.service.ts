@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpParams,HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpParams,HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+
+import {TokenstoreserviceService} from './tokenstoreservice.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiRequestService {
 
+  baseUrl:string='http://10.20.20.76:8080/';
+
+
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
+    private tokenstore: TokenstoreserviceService
   ) { }
 
   private handleError(error: HttpErrorResponse) {
@@ -29,8 +36,19 @@ export class ApiRequestService {
       'Something bad happened; please try again later.');
   };
 
+  private getHeader():HttpHeaders{
+    let header=new HttpHeaders();
+    let token='Bearer '+this.tokenstore.getToken();
+    // header = header.append('Content-Type', 'application/json');
+    if(token!==null){
+      header=header.append("Authorization", token);
+      console.log("in"+token);
+    }
+    return header;
+  }
+
   get(url:string,params:HttpParams){
-    return this.http.get(url,{params:params, observe: "response"})
+    return this.http.get(this.baseUrl+url,{params:params,headers:this.getHeader(), observe: "response"})
               .pipe(
                 
                 catchError(this.handleError)
@@ -38,7 +56,7 @@ export class ApiRequestService {
   }
 
   post(url:string, data:any){
-    return this.http.post(url,data,{observe:"response"})
+    return this.http.post(this.baseUrl+url,data,{headers:this.getHeader(),observe:"response"})
                 .pipe(
                   catchError(this.handleError)
                 );

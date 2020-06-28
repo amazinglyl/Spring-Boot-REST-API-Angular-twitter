@@ -4,6 +4,7 @@ package rest.twitter.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +20,7 @@ import java.util.Base64;
 import java.util.Date;
 
 @Component
+@Slf4j
 public class JwtTokenProvidor {
 
     @Value("${security.jwt.secret}")
@@ -39,8 +41,6 @@ public class JwtTokenProvidor {
         Claims claims= Jwts.claims().setSubject(name);
         Date currentTime= new Date();
         Date validity=new Date(currentTime.getTime()+expire);
-
-
 
         return Jwts.builder()
                 .setClaims(claims)

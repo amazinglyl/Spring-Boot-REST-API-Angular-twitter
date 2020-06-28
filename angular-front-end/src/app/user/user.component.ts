@@ -16,7 +16,7 @@ export class UserComponent implements OnInit {
   tweets:any={};
   id:number;
   // baseUrl:string='http://10.20.20.76:8080/';
-  baseUrl:string='http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/';
+  //baseUrl:string='http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/';
   selected:string;
   tweetText:string;
   user:any={};
@@ -44,7 +44,7 @@ export class UserComponent implements OnInit {
   }
 
   getUserInfo(){
-    this.apiRquest.get(this.baseUrl+"users/"+this.id,new HttpParams())
+    this.apiRquest.get("users/"+this.id,new HttpParams())
         .subscribe(res=>{
           this.user=res.body;
         })
@@ -60,7 +60,7 @@ export class UserComponent implements OnInit {
       text:this.tweetText,
     }
     
-    this.apiRquest.post(this.baseUrl+"tweet",data)
+    this.apiRquest.post("tweet",data)
         .subscribe(res=>{
             if(res.status===200){
               console.log(this.router.url);

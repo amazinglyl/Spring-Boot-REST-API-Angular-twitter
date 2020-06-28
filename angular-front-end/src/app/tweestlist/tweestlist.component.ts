@@ -12,7 +12,7 @@ import {ApiRequestService} from '../api-request.service';
 export class TweestlistComponent implements OnInit {
   tweets:any={};
   id:number;
-  baseUrl:string='http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/';
+  //baseUrl:string='http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/';
 
   constructor(
     private http: HttpClient,
@@ -33,7 +33,7 @@ export class TweestlistComponent implements OnInit {
   }
 
   gettweets(){
-    this.apiRquest.get(this.baseUrl+"useralltweets/"+this.id,new HttpParams())
+    this.apiRquest.get("useralltweets/"+this.id,new HttpParams())
     .subscribe(res=>{
         this.tweets=res.body;
     })

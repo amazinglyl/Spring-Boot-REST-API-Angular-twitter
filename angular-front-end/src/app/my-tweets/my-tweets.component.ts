@@ -14,8 +14,8 @@ import {ApiRequestService} from '../api-request.service';
 export class MyTweetsComponent implements OnInit {
   tweets:any={};
   id:number;
-  // baseUrl:string='http://10.20.20.76:8080/';
-  baseUrl:string='http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/';
+  //baseUrl:string='http://10.20.20.76:8080/';
+  //baseUrl:string='http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/';
 
   constructor(
     private http: HttpClient,
@@ -36,7 +36,7 @@ export class MyTweetsComponent implements OnInit {
   }
 
   gettweets(){
-    this.apiRquest.get(this.baseUrl+"usertweets/"+this.id,new HttpParams())
+    this.apiRquest.get("usertweets/"+this.id,new HttpParams())
     .subscribe(res=>{
         this.tweets=res.body;
     })

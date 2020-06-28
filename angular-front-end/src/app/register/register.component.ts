@@ -11,7 +11,7 @@ import {ApiRequestService} from '../api-request.service';
 })
 export class RegisterComponent implements OnInit {
 
-  baseUrl:string='http://10.20.20.76:8080/';
+  //baseUrl:string='http://10.20.20.76:8080/';
 
   userData:any={};
   repeatPassword:string;
@@ -25,7 +25,7 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(){
-    this.apiRquest.post(this.baseUrl+"users",this.userData)
+    this.apiRquest.post("users",this.userData)
                   .subscribe(
                     res=>{
                       if(res.status==200)
