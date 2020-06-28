@@ -9,7 +9,8 @@ import { catchError, retry } from 'rxjs/operators';
 })
 export class LoginServiceService {
 
-  url:string="http://10.20.20.76:8080/user";
+  // url:string="http://10.20.20.76:8080/user";
+  url:string="http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/user";
 
   constructor(
     private http:HttpClient

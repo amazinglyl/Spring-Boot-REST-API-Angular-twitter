@@ -57,16 +57,16 @@ public class LoadDataBase {
             }
 
             // add like randomly
-            Set<String> likeSet = new HashSet<>();
-            for(int i=0;i<50;i++){
-                int author=rand.nextInt(4)+1;
-                int tweet=rand.nextInt(16)+1;
-                String temp=""+author+" "+tweet;
-                if(!likeSet.contains(temp)) {
-                    log.info("PreLoading" + likeTableRepository.save(new LikeTable(author, tweet)));
-                    likeSet.add(temp);
-                }
-            }
+//            Set<String> likeSet = new HashSet<>();
+//            for(int i=0;i<50;i++){
+//                int author=rand.nextInt(4)+1;
+//                int tweet=rand.nextInt(16)+1;
+//                String temp=""+author+" "+tweet;
+//                if(!likeSet.contains(temp)) {
+//                    log.info("PreLoading" + likeTableRepository.save(new LikeTable(author, tweet)));
+//                    likeSet.add(temp);
+//                }
+//            }
         };
     }
 

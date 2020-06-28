@@ -12,7 +12,7 @@ import {ApiRequestService} from '../api-request.service';
 export class TweestlistComponent implements OnInit {
   tweets:any={};
   id:number;
-  baseUrl:string='http://10.20.20.76:8080/';
+  baseUrl:string='http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/';
 
   constructor(
     private http: HttpClient,
