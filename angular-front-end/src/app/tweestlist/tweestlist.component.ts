@@ -12,6 +12,7 @@ import {ApiRequestService} from '../api-request.service';
 export class TweestlistComponent implements OnInit {
   tweets:any={};
   id:number;
+  like:boolean;
   //baseUrl:string='http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/';
 
   constructor(
@@ -22,6 +23,7 @@ export class TweestlistComponent implements OnInit {
 
   ngOnInit(): void {
     this.getId(); 
+    this.like=false;
   }
 
   getId(){
@@ -37,6 +39,22 @@ export class TweestlistComponent implements OnInit {
     .subscribe(res=>{
         this.tweets=res.body;
     })
+  }
+
+  likeclick(i:number){
+    let count=this.tweets[i]["likes"];
+      if(count<0){
+        count=-count;
+        this.tweets[i]["likes"]=count-1;
+      }
+      else{
+        count=count+1;
+        this.tweets[i]["likes"]=-count;
+      }
+  }
+
+  commentclick(){
+
   }
 
 }

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import rest.twitter.controller.FollowTableController;
 import rest.twitter.repository.*;
 import rest.twitter.domian.*;
 
@@ -48,25 +49,41 @@ public class LoadDataBase {
                 for(int j=0;j<4;j++) {
                     String temp = "" + i + " " + j;
                     if (!set.contains(temp) && i != j) {
-                        log.info("PreLoading" + repositoryFollowTable.save(new FollowTable(i+1, j+1)));
+                        FollowTable table=new FollowTable(i+1,j+1);
+                        User user = repository.findById(table.getFollowedId()).get();//.orElseThrow(()->new UserNotFoundException(table.getFollowedId()));
+                        user.setFollowers(user.getFollowers()+1);
+                        repository.save(user);
+
+                        //User with followerId in table increase following number by 1;
+                        User user2 = repository.findById(table.getFollowerId()).get();//.orElseThrow(()->new UserNotFoundException(table.getFollowedId()));
+                        user2.setFollowings(user.getFollowings()+1);
+                        repository.save(user2);
+
+                        repositoryFollowTable.save(table);
                         set.add(temp);
                     }
-
+                    User user = repository.findById((long)i+1).get();
+                    user.setTweets(user.getTweets() + 1);
+                    repository.save(user);
                     log.info("preLoading" + tweetRepository.save(new Tweet(i+1, tweets[4*i+j],name[i])));
                 }
             }
 
             // add like randomly
-//            Set<String> likeSet = new HashSet<>();
-//            for(int i=0;i<50;i++){
-//                int author=rand.nextInt(4)+1;
-//                int tweet=rand.nextInt(16)+1;
-//                String temp=""+author+" "+tweet;
-//                if(!likeSet.contains(temp)) {
-//                    log.info("PreLoading" + likeTableRepository.save(new LikeTable(author, tweet)));
-//                    likeSet.add(temp);
-//                }
-//            }
+            Set<String> likeSet = new HashSet<>();
+            for(int i=0;i<10;i++){
+                int author=rand.nextInt(4)+1;
+                int tweetId=rand.nextInt(16)+1;
+                String temp=""+author+" "+tweetId;
+                if(!likeSet.contains(temp)) {
+
+                    Tweet tweet = tweetRepository.findById((long)tweetId).get();
+                    tweet.setLikes(tweet.getLikes()+1);
+                    tweetRepository.save(tweet);
+                    log.info("PreLoading" + likeTableRepository.save(new LikeTable(author, tweetId)));
+                    likeSet.add(temp);
+                }
+            }
         };
     }
 

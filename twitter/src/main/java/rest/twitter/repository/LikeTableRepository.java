@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface LikeTableRepository  extends JpaRepository<LikeTable, Long> {
     List<LikeTable> findByTweet(long tweet);
+    List<LikeTable> findByAuthor(long author);
 }
