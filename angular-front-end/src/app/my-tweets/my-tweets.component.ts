@@ -42,5 +42,20 @@ export class MyTweetsComponent implements OnInit {
     })
   }
 
+  likeclick(i:number){
+    let count=this.tweets[i]["likes"];
+      if(count<0){
+        count=-count;
+        this.tweets[i]["likes"]=count-1;
+      }
+      else{
+        count=count+1;
+        this.tweets[i]["likes"]=-count;
+      }
+  }
+
+  commentclick(){
+
+  }
 
 }

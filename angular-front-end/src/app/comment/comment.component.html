@@ -1,0 +1,42 @@
+<div class="media border-left border-right pt-4">
+    <i class="fas fa-user-circle fa-3x mr-3"></i>
+    <div class="media-body">
+        <h4>{{tweet["user"]}} <small><i>Posted on June 01, 2020</i></small></h4>
+        <hr>
+        <p>{{tweet["text"]}}</p>
+        <!-- <ul class="nav nav-pills nav-justified m-0 ">
+            <li class="nav-item">
+                <button class="btn" (click)="likeclick(i)" ><i [ngClass]="tweet['likes']>=0 ? 'far fa-heart' : 'fas fa-heart'"></i>  {{tweet["likes"]>=0 ? tweet["likes"] : -tweet["likes"]}}</button>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" (click)="commentclick()"><i class="far fa-comment"></i>  {{tweet["comments"]}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" href="#"><i class="far fa-share-square"></i>  {{tweet["visit"]}}</a>
+            </li>
+        </ul> -->
+        <ul class="list-group">
+            <li class="list-group-item p-0" *ngFor="let tweet of comment; index as i">
+                <div class="media p-2 position-relative">
+                    <i class="fas fa-user-circle fa-3x mr-3"></i>
+                    <div class="media-body">
+                        <h4>{{tweet["commentor"]}} <small><i>Posted on June 01, 2020</i></small></h4>
+                        <hr>
+                        <a class="nav-link text-dark" [routerLink]="['../comment',tweet['id']]">{{tweet["text"]}}</a>
+                        <!-- <ul class="nav nav-pills nav-justified m-0 ">
+                            <li class="nav-item">
+                                <button class="btn" (click)="likeclick(i)" ><i [ngClass]="tweet['likes']>=0 ? 'far fa-heart' : 'fas fa-heart'"></i>  {{tweet["likes"]>=0 ? tweet["likes"] : -tweet["likes"]}}</button>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" (click)="commentclick()"><i class="far fa-comment"></i>  {{tweet["comments"]}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#"><i class="far fa-share-square"></i>  {{tweet["visit"]}}</a>
+                            </li>
+                        </ul> -->
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

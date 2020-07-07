@@ -8,9 +8,11 @@ import { TweestlistComponent } from './tweestlist/tweestlist.component';
 import { MyTweetsComponent } from './my-tweets/my-tweets.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { MyFollowerComponent } from './my-follower/my-follower.component';
+import { CommentComponent } from './comment/comment.component';
+
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  // { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { 
     path: 'user/:id', 
@@ -20,6 +22,7 @@ const routes: Routes = [
       {path: 'tweets', component: MyTweetsComponent},
       {path: 'profile', component: MyProfileComponent},
       {path: 'followers', component: MyFollowerComponent},
+      {path: 'comment/:id', component: CommentComponent},
     ]
   
   },

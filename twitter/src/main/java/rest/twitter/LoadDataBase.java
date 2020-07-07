@@ -18,7 +18,7 @@ import java.util.*;
 public class LoadDataBase {
 
     @Bean
-    CommandLineRunner initializeDataBase(UserRepository repository,FollowTableRepository repositoryFollowTable,TweetRepository tweetRepository, LikeTableRepository likeTableRepository){
+    CommandLineRunner initializeDataBase(UserRepository repository,FollowTableRepository repositoryFollowTable,TweetRepository tweetRepository, LikeTableRepository likeTableRepository,CommmetRepository commmetRepository){
         return args -> {
             //add users
             String[] name=new String[]{"William","Jason","Eric","Liam"};
@@ -42,6 +42,12 @@ public class LoadDataBase {
                     " I only saw you for a second, but it made my day.",
                     "I miss my sleep in the night and I miss the light in my day, It’s a wonderful feel to melt in love and I melt at your love!",
                     "Every love story is beautiful … but ours is my favorite!"};
+            String[] comment=new String[]{
+                    "Your are awsome!",
+                    "Come on! You can do it!",
+                    "Where are we frome? Where are we going?",
+                    "What's the meaning of existance of life?"
+            };
             // add follow and tweets randomly
             Set<String> set = new HashSet<>();
             Random rand=new Random();
@@ -67,6 +73,11 @@ public class LoadDataBase {
                     repository.save(user);
                     log.info("preLoading" + tweetRepository.save(new Tweet(i+1, tweets[4*i+j],name[i])));
                 }
+                Tweet tweet = tweetRepository.findById((long)1).get();
+                tweet.setComments(tweet.getComments()+1);
+                tweetRepository.save(tweet);
+
+                commmetRepository.save(new CommentTable(i+1,1,comment[i],name[i]));
             }
 
             // add like randomly
