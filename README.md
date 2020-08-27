@@ -12,7 +12,7 @@ DB                | PostgreSQL
 In Memory DB      | H2 
 Cache             | [Redis](https://spring.io/projects/spring-data-redis)
 Mapreduce         | [Appache Beam](https://beam.apache.org/)
-Scheduling task   | Spring Scheduled
+Cron job          | Spring Scheduled
 Cloud             | AWS
 Client Build Tools| angular-cli, npm
 Server Build Tools| Gradle
@@ -20,7 +20,8 @@ Server Build Tools| Gradle
 ## Folder Structure
 ```bash
 PROJECT_FOLDER
-└──[angular-front-end]  
+└──[angular-front-end] 
+|  |  README.md
 |  |  package.json 
 │  └──[src]      
 │     |  inde.html 
@@ -45,5 +46,11 @@ PROJECT_FOLDER
 |        └──[resource]
 |           └──[controller] 
 |           └──[domain] 
+|           └──[security]
+|           └──[exeption]
+|           └──[repository]
+|           |  CrosConfiger.java
+|           |  RedisCOnfig.java
+|           |  TwitterAplication.java
 |     └──[test]
 ```
