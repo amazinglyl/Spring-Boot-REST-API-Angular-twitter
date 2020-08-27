@@ -12,7 +12,7 @@ import {TokenstoreserviceService} from './tokenstoreservice.service';
 })
 export class ApiRequestService {
 
-  baseUrl:string='http://10.20.20.76:8080/';
+  baseUrl:string='http://10.20.20.38:8080/';
 
 
   constructor(
