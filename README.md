@@ -41,6 +41,7 @@ PROJECT_FOLDER
 └──[twitter]
 |  |  build.gradle
 |  └──[src]
+|     └──[test]
 |     └──[main]
 |        └──[java/rest/twitter]
 |        └──[resource]
@@ -52,5 +53,4 @@ PROJECT_FOLDER
 |           |  CrosConfiger.java
 |           |  RedisCOnfig.java
 |           |  TwitterAplication.java
-|     └──[test]
 ```
