@@ -13,6 +13,7 @@ import { TweestlistComponent } from './tweestlist/tweestlist.component';
 import { MyTweetsComponent } from './my-tweets/my-tweets.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { MyFollowerComponent } from './my-follower/my-follower.component';
+import { CommentComponent } from './comment/comment.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { MyFollowerComponent } from './my-follower/my-follower.component';
     TweestlistComponent,
     MyTweetsComponent,
     MyProfileComponent,
-    MyFollowerComponent
+    MyFollowerComponent,
+    CommentComponent
   ],
   imports: [
     BrowserModule,

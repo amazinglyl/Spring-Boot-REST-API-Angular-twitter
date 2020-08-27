@@ -21,14 +21,17 @@ public class CommentTable implements Serializable {
 
     private String text;
 
+    private String commentor;
+
 
     public CommentTable(){};
 
-    public CommentTable(long author_, long tweet_,String text_){
+    public CommentTable(long author_, long tweet_,String text_,String _Commentor){
 
         author=author_;
         tweet=tweet_;
         text=text_;
+        commentor=_Commentor;
     }
 
 

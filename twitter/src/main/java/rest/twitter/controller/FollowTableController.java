@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -28,6 +29,9 @@ public class FollowTableController {
 
     @Autowired
     TweetRepository repositoryTweet;
+
+    @Autowired
+    ServiceUtil serviceUtil;
 
     @Resource
     RedisTemplate<String, Object> redisTemplate;
@@ -206,7 +210,15 @@ public class FollowTableController {
                 listOperations.leftPushAll(key, tweetList);
                 res.addAll(tweetList);
             }
+        }
 
+        Set<Long> likeTrack=serviceUtil.likeList(id);
+        for(Tweet tweet:res){
+            if(likeTrack.contains(tweet.getId())) {
+                long count = tweet.getLikes();
+                count=-count;
+                tweet.setLikes(count);
+            }
         }
         return res;
     }

@@ -3,16 +3,18 @@ import {HttpClient, HttpParams,HttpErrorResponse} from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import {TokenstoreserviceService} from './tokenstoreservice.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginServiceService {
 
-  url:string="http://10.20.20.76:8080/user";
+   url:string="http://10.20.20.38:8080/authenticate";
+ // url:string="http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/authenticate";
 
   constructor(
-    private http:HttpClient
+    private http:HttpClient,
   ) { }
 
   private handleError(error: HttpErrorResponse) {
@@ -31,11 +33,11 @@ export class LoginServiceService {
       'Something bad happened; please try again later.');
   };
 
-  get(name:string,password:string){
+  post(name:string,password:string){
     const params=new HttpParams()
                   .set('name',name)
                   .set('password',password);
-      return this.http.get(this.url,{params:params, observe: "response"})
+      return this.http.post(this.url, params,{observe: "response"})
               .pipe(
                 
                 catchError(this.handleError)

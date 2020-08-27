@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {LoginServiceService} from '../login-service.service';
 import {Router} from '@angular/router';
+import {TokenstoreserviceService} from '../tokenstoreservice.service';
+
 
 @Component({
   selector: 'app-login',
@@ -10,29 +12,31 @@ import {Router} from '@angular/router';
 export class LoginComponent implements OnInit {
 
   model:any={};
-  fail:boolean;
+  fail:string;
 
   constructor(
     private loginService:LoginServiceService,
-    private router:Router
+    private router:Router,
+    public tokenstore: TokenstoreserviceService
   ) { }
 
   ngOnInit(): void {
   }
 
   login(){
-      this.loginService.get(this.model.name,this.model.password)
+      this.loginService.post(this.model.name,this.model.password)
           .subscribe(res=>{
               console.log(res.status);
-              if(res.status===200){
-                let id:number=res.body["id"];
-                console.log(id);
-                this.router.navigate(['/user',id,'home'])
-              }
-              else{
-                this.fail=true;
-              }
-          })
+              let id:number=res.body["id"];
+              this.tokenstore.store(res.body["token"]);
+              console.log(res.body["token"]);
+              console.log(id);
+              this.router.navigate(['/user',id,'home'])
+          },
+          err=>{
+            this.fail="failed login"
+          }
+          )
   }
 
 }
