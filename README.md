@@ -44,13 +44,13 @@ PROJECT_FOLDER
 |     └──[test]
 |     └──[main]
 |        └──[java/rest/twitter]
-|        └──[resource]
+|           |  CrosConfiger.java
+|           |  RedisCOnfig.java
+|           |  TwitterAplication.java
 |           └──[controller] 
 |           └──[domain] 
 |           └──[security]
 |           └──[exeption]
 |           └──[repository]
-|           |  CrosConfiger.java
-|           |  RedisCOnfig.java
-|           |  TwitterAplication.java
+|        └──[resource]
 ```
