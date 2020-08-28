@@ -8,7 +8,7 @@ Frontend          | [Angular](https://angular.io/)
 Backend (REST)    | [SpringBoot](https://projects.spring.io/spring-boot) 
 Data access       | [JPA](https://spring.io/projects/spring-data-jpa)
 Security          | [Spring Security and JWT](https://spring.io/projects/spring-securit)
-DB                | PostgreSQL
+DB                | MySQL
 In Memory DB      | H2 
 Cache             | [Redis](https://spring.io/projects/spring-data-redis)
 Mapreduce         | [Appache Beam](https://beam.apache.org/)
