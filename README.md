@@ -39,18 +39,18 @@ PROJECT_FOLDER
 |  |  h2-1.4.200.jar
 |  |  test.py
 └──[twitter]
-|  |  build.gradle
-|  └──[src]
-|     └──[test]
-|     └──[main]
-|        └──[java/rest/twitter]
-|           |  CrosConfiger.java
-|           |  RedisCOnfig.java
-|           |  TwitterAplication.java
-|           └──[controller] 
-|           └──[domain] 
-|           └──[security]
-|           └──[exeption]
-|           └──[repository]
-|        └──[resource]
+   |  build.gradle
+   └──[src]
+      └──[test]
+      └──[main]
+         └──[java/rest/twitter]
+            |  CrosConfiger.java
+            |  RedisCOnfig.java
+            |  TwitterAplication.java
+            └──[controller] 
+            └──[domain] 
+            └──[security]
+            └──[exeption]
+            └──[repository]
+         └──[resource]
 ```
