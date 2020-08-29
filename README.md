@@ -87,7 +87,7 @@ Frontend     | S3
 #### Login
 ![Dashboard](/snapshot/login.PNG?raw=true)
 ---
-#### Home(single page application)
+#### Home(spa)
 ![Dashboard](/snapshot/home.PNG?raw=true)
 ---
 #### tweet
