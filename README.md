@@ -80,4 +80,16 @@ Redis        | ElastiCache
 DataBase     | RDS
 MapReduce    | EC2
 Frontend     | S3
+### Screenshots
+#### Registration
+![Dashboard](/snapshot/registration.PNG?raw=true)
+---
+#### Login
+![Dashboard](/snapshot/login.PNG?raw=true)
+---
+#### Home
+![Dashboard](/snapshot/home.PNG?raw=true)
+---
+#### tweet
+![Dashboard](/snapshot/tweet.PNG?raw=true)
 ##
