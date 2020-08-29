@@ -71,3 +71,12 @@ Here Gradle tool is used to build our backend part. There are two ways often use
 ## navigate into the directory including build.gradle file 
 gralde build
 ```
+## Post on AWS
+The project is posted by five parts seperately, including backend, database, redis, mapreduce, frontend. It also could be done with Docker, which uploads the whole project as one. First method is more convinent to modify some parts, but takes a little more time. 
+Component    | AWS
+---          | ---
+Backend      | Elastic Beanstalk
+Redis        | ElastiCache
+DataBase     | RDS
+MapReduce    | EC2
+Frontend     | S3
