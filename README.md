@@ -54,3 +54,20 @@ PROJECT_FOLDER
             └──[repository]
          └──[resource]
 ```
+## Build Frontend
+If you clone the project and run the frontend part direclty, the command is
+```bash
+# navigate to angular-front-end folder, run below command, then access the web with URL: http://localhost:4042
+ng serve
+```
+If you want to post it onto cloud end like AWS
+```bash
+# build it and post on AWS, you would see a dist folder created, then upload it to AWS
+ng build -prod
+```
+## Build Backend
+Here Gradle tool is used to build our backend part. There are two ways often used, one is use Graled pulgin in IDE like Intellij IDEA, another way is use command line in termial 
+```bash
+## navigate into the directory including build.gradle file 
+gralde build
+```
