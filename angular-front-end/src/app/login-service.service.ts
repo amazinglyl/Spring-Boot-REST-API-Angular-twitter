@@ -10,7 +10,7 @@ import {TokenstoreserviceService} from './tokenstoreservice.service';
 })
 export class LoginServiceService {
 
-   url:string="http://10.20.20.38:8080/authenticate";
+   url:string="http://localhost:8080/authenticate";
  // url:string="http://restapi-env.eba-xd2trzjb.us-east-2.elasticbeanstalk.com/authenticate";
 
   constructor(
