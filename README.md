@@ -48,12 +48,15 @@ PROJECT_FOLDER
             |  CrosConfiger.java
             |  RedisCOnfig.java
             |  TwitterAplication.java
+            |  Cronjob.java
+            |  LoadData.java
             └──[controller] 
             └──[domain] 
             └──[security]
             └──[exeption]
             └──[repository]
          └──[resource]
+            |  application.properties
 ```
 ## Build Frontend
 If you clone the project and run the frontend part direclty, the command is
