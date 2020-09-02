@@ -1,5 +1,5 @@
 ## Angular Frontent + SpringBoot (Java) Backend
-This is mini Twitter project including frontend and backend. Frontend is based on Agular while backend is REST service based on SrpingBoot. The function includes registration, login, authentication and authorization, tweet post and delete, comment, like, follow, hot tweets, cache CRUD, CORS access, and new tweet notification. 
+This is mini Twitter project including frontend and backend. Frontend is based on Agular while backend is REST service based on SrpingBoot. The features includes registration, login, authentication and authorization, tweet post and delete, comment, like, follow, hot tweets, cache CRUD, CORS access, and new tweet notification. 
 
 ### Technology Stack
 Component         | Technology
