@@ -73,7 +73,7 @@ ng build -prod
 Here Gradle tool is used to build our backend part. There are two ways often used, one is use Graled pulgin in IDE like Intellij IDEA, another way is use command line in termial 
 ```bash
 ## navigate into the directory including build.gradle file 
-gralde build
+gradle build
 ```
 ## Post on AWS
 The project is posted by five parts seperately, including backend, database, redis, mapreduce, frontend. It also could be done with Docker, which uploads the whole project as one. First method is more convinent to modify some parts, but takes a little more time. 
